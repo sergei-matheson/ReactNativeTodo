@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
-import {TodoItem} from '../TodoItem';
+import {TodoItem} from '../types/TodoItem';
 
 type OnValueChange = (value: boolean) => void;
 

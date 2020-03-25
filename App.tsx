@@ -20,7 +20,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Header} from './src/components/Header';
 import {ItemEntry} from './src/components/ItemEntry';
 import {updateArray} from './src/lib/updateArray';
-import {TodoItem} from './src/TodoItem';
+import {TodoItem} from './src/types/TodoItem';
 
 declare var global: {HermesInternal: null | {}};
 
