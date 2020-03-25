@@ -8,39 +8,21 @@
  * @format
  */
 
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Switch,
-  Text,
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Header} from './src/components/Header';
+import {ItemEntry} from './src/components/ItemEntry';
 import {updateArray} from './src/utils';
+import {TodoItem} from './src/TodoItem';
 
 declare var global: {HermesInternal: null | {}};
-
-interface TodoItem {
-  id: number;
-  name: string;
-  done: boolean;
-}
-
-type OnValueChange = (value: boolean) => void;
-
-const ItemEntry: FC<{item: TodoItem; onValueChange: OnValueChange}> = ({
-  item,
-  onValueChange,
-}) => (
-  <View style={styles.itemEntry}>
-    <Text>{item.name}</Text>
-    <Switch value={item.done} onValueChange={onValueChange} />
-  </View>
-);
 
 const App = () => {
   const [items, setItems] = useState([
@@ -77,46 +59,8 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  itemEntry: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 5,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
   body: {
     backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
 
