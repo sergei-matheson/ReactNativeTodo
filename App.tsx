@@ -17,41 +17,45 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {AddItem} from './src/components/AddItem';
 import {Header} from './src/components/Header';
 import {ItemEntry} from './src/components/ItemEntry';
 import {updateArray} from './src/lib/updateArray';
+import {NewItem} from './src/types/NewItem';
 import {TodoItem} from './src/types/TodoItem';
 
 declare var global: {HermesInternal: null | {}};
 
 const App = () => {
-  const [items, setItems] = useState([
-    {id: 1, name: 'The thing', done: false},
-    {id: 2, name: 'The other thing', done: true},
-    {id: 3, name: 'The third thing', done: true},
-  ]);
+  const [items, setItems] = useState<TodoItem[]>([]);
 
   const updateItem = (item: TodoItem) =>
     setItems(updateArray(items, item, ({id}) => id === item.id));
+
+  const addItem = (item: NewItem) =>
+    setItems(items.concat([{...item, id: items.length + 1}]));
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <View style={styles.body}>
-          <FlatList
-            ListHeaderComponent={<Header>Todo</Header>}
-            data={items}
-            renderItem={({item}) => (
-              <ItemEntry
-                item={item}
-                onValueChange={value => {
-                  updateItem({...item, done: value});
-                }}
-              />
-            )}
-            keyExtractor={item => item.name}
-          />
+          {items.length > 0 && (
+            <FlatList
+              ListHeaderComponent={<Header>Todo</Header>}
+              data={items}
+              renderItem={({item}) => (
+                <ItemEntry
+                  item={item}
+                  onValueChange={value => {
+                    updateItem({...item, done: value});
+                  }}
+                />
+              )}
+              keyExtractor={item => `${item.id}`}
+            />
+          )}
+          <AddItem onAdd={addItem} />
         </View>
       </SafeAreaView>
     </>

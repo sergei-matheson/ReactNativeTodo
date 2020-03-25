@@ -1,5 +1,5 @@
-export interface TodoItem {
+import {NewItem} from './NewItem';
+
+export interface TodoItem extends NewItem {
   id: number;
-  name: string;
-  done: boolean;
 }
