@@ -19,6 +19,7 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Header} from './src/components/Header';
 import {updateArray} from './src/utils';
 
 declare var global: {HermesInternal: null | {}};
@@ -39,12 +40,6 @@ const ItemEntry: FC<{item: TodoItem; onValueChange: OnValueChange}> = ({
     <Text>{item.name}</Text>
     <Switch value={item.done} onValueChange={onValueChange} />
   </View>
-);
-
-const Header: FC = ({children}) => (
-  <Text accessibilityRole="header" style={styles.header}>
-    {children}
-  </Text>
 );
 
 const App = () => {
@@ -89,12 +84,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 5,
-  },
-  header: {
-    marginBottom: 5,
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
   },
   engine: {
     position: 'absolute',
