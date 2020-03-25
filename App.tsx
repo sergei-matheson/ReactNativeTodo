@@ -40,9 +40,10 @@ const App = () => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <View style={styles.body}>
-          {items.length > 0 && (
+          {items.length > 0 ? (
             <FlatList
               ListHeaderComponent={<Header>Todo</Header>}
+              ListFooterComponent={<AddItem onAdd={addItem} />}
               data={items}
               renderItem={({item}) => (
                 <ItemEntry
@@ -54,8 +55,9 @@ const App = () => {
               )}
               keyExtractor={item => `${item.id}`}
             />
+          ) : (
+            <AddItem onAdd={addItem} />
           )}
-          <AddItem onAdd={addItem} />
         </View>
       </SafeAreaView>
     </>
@@ -65,6 +67,7 @@ const App = () => {
 const styles = StyleSheet.create({
   body: {
     backgroundColor: Colors.white,
+    padding: 5,
   },
 });
 

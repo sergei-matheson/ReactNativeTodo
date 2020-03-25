@@ -36,7 +36,7 @@ export const AddItem: FC<{
   };
 
   return (
-    <View style={styles.itemEntry}>
+    <View style={styles.addItem}>
       <Header>Add new item:</Header>
       <LabelledInput label="Name" error={error}>
         <TextInput
@@ -51,10 +51,11 @@ export const AddItem: FC<{
 };
 
 const styles = StyleSheet.create({
-  itemEntry: {
+  addItem: {
     flexDirection: 'column',
     justifyContent: 'space-around',
     padding: 5,
+    marginBottom: 20,
   },
   itemInputs: {
     flexDirection: 'column',
