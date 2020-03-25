@@ -1,18 +1,24 @@
 # ReactNativeTodo
-Simple Typescript [React Native](https://reactnative.dev/) todo list toy app. Generated with the react-native cli using:
 
+Simple Typescript [React Native](https://reactnative.dev/) todo list toy app. Generated with the react-native cli using:
 
 `npx react-native init reactnativeTodo --template react-native-template-typescript`
 
-## Setup
-* Clone repo
-* Install dependencies:
+## Local development
 
-   `yarn`
-* Start app for IOS
-   
-   `yarn ios`
+- Clone repo
+- Install dependencies:
 
-* Run tests
+  `yarn`
 
-   `yarn test`
+- Start app in dev mode
+
+  `yarn ios`
+
+- Start device emulator for IOS
+
+  `yarn ios`
+
+- Run tests
+
+  `yarn test`
