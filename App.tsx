@@ -8,69 +8,74 @@
  * @format
  */
 
-import React from 'react';
+import React, {FC, useState} from 'react';
 import {
+  FlatList,
   SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
 } from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {updateArray} from './src/utils';
 
 declare var global: {HermesInternal: null | {}};
 
+interface TodoItem {
+  id: number;
+  name: string;
+  done: boolean;
+}
+
+type OnValueChange = (value: boolean) => void;
+
+const ItemEntry: FC<{item: TodoItem; onValueChange: OnValueChange}> = ({
+  item,
+  onValueChange,
+}) => (
+  <View style={styles.itemEntry}>
+    <Text>{item.name}</Text>
+    <Switch value={item.done} onValueChange={onValueChange} />
+  </View>
+);
+
+const Header: FC = ({children}) => (
+  <Text accessibilityRole="header" style={styles.header}>
+    {children}
+  </Text>
+);
+
 const App = () => {
+  const [items, setItems] = useState([
+    {id: 1, name: 'The thing', done: false},
+    {id: 2, name: 'The other thing', done: true},
+    {id: 3, name: 'The third thing', done: true},
+  ]);
+
+  const updateItem = (item: TodoItem) =>
+    setItems(updateArray(items, item, ({id}) => id === item.id));
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+        <View style={styles.body}>
+          <FlatList
+            ListHeaderComponent={<Header>Todo</Header>}
+            data={items}
+            renderItem={({item}) => (
+              <ItemEntry
+                item={item}
+                onValueChange={value => {
+                  updateItem({...item, done: value});
+                }}
+              />
+            )}
+            keyExtractor={item => item.name}
+          />
+        </View>
       </SafeAreaView>
     </>
   );
@@ -79,6 +84,17 @@ const App = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+  },
+  itemEntry: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+  },
+  header: {
+    marginBottom: 5,
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
   },
   engine: {
     position: 'absolute',
